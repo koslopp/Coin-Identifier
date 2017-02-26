@@ -2,7 +2,7 @@
 ////                             MAIN.C                                ////
 ////             Generic Microgenios PIC18F2550 main file              ////
 ////                                                                   ////
-////                       Daniel Koslopp - 2013                       ////
+////          Daniel Koslopp / Talita Tobias Carneiro - 2013           ////
 ////                                                                   ////
 ///////////////////////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@
 #define lcd_cursor_pisca()\
         lcd_comando(0b00001111)
 
-//Define endereço registradores
+//Define endereÃ§o registradores
 
 #byte OPTION_REG=0x181
 #byte INTCON=0xFF2
@@ -74,32 +74,32 @@ char ch3='0';
 char ch4='0';
 int16 TEMPO=0;
 
-//Interruções
+//InterruÃ§Ãµes
 
 
 
 //System initialization
 
-void init() //Condições Iniciais
+void init() //CondiÃ§Ãµes Iniciais
 {
-   GIE=1;   //Habilita interrupções
-   PEIE=1;  //Habilita periféricos (TMR1)
+   GIE=1;   //Habilita interrupÃ§Ãµes
+   PEIE=1;  //Habilita perifÃ©ricos (TMR1)
    INT0IE=1;   //Habilita intr. externa 0 (RB0)
    INTEDG0=1;  //Intr. externa 0 por borda de subida
    RD16=0;  //TMR1 em 16 bits
    T1CKPS1=0;  //T1CKPS1:T1CKPS0 = 00 (Prescale 1:1)
    T1CKPS0=0;
-   T1SYNC=1;   //Sem sincronização externa
+   T1SYNC=1;   //Sem sincronizaÃ§Ã£o externa
    TMR1CS=0;   //Clock = Fosc/4
-   TMR1ON=1;   //Começa desligado
+   TMR1ON=1;   //ComeÃ§a desligado
    set_tris_a(0xFF);    //PORTA como entrada
-   set_tris_b(0x0F);    //PORTB como saída <7:4> e entrada <3:0>
-   set_tris_c(0xFC);    //PORTC como entrada <7:2> e saída <1:0>
+   set_tris_b(0x0F);    //PORTB como saÃ­da <7:4> e entrada <3:0>
+   set_tris_c(0xFC);    //PORTC como entrada <7:2> e saÃ­da <1:0>
    output_b(0x00);      //Zera saidas PORTB
    output_c(0x00);      //Zera saidas PORTC
 }
 
-// Funções Auxiliares
+// FunÃ§Ãµes Auxiliares
 
 void lcd_escreve(boolean BITRS, int8 ch)  //Escreve no lcd em 4 bits
 {
@@ -178,21 +178,21 @@ void  lcd_bintodec(int16 val)   //Escreve numero binario na forma decimal no LCD
 }
 
 #int_ext
-void trata_int_ext() //Trata a interrupção externa (pulso)
+void trata_int_ext() //Trata a interrupÃ§Ã£o externa (pulso)
 {
-   INT0IF=0;   //Zera flag interrupção
-   if(INTEDG0==1) //Se interrupção por borda se subida
+   INT0IF=0;   //Zera flag interrupÃ§Ã£o
+   if(INTEDG0==1) //Se interrupÃ§Ã£o por borda se subida
    {
       TMR1H=0; //Zera TMR1H e TMR1L
       TMR1L=0; 
       TMR1ON=1;   //Liga TMR1
-      INTEDG0=0;  //Próxima interrupção por borda de descida
+      INTEDG0=0;  //PrÃ³xima interrupÃ§Ã£o por borda de descida
    }
    else
    {
       TMR1ON=0;   //Para TMR1
-      TEMPO=TMR1L+256*TMR1H;  //Manda tempo do TMR1 para variável de 16 bits
-      INTEDG0=1;  //Próxima interrupção por borda de subida
+      TEMPO=TMR1L+256*TMR1H;  //Manda tempo do TMR1 para variÃ¡vel de 16 bits
+      INTEDG0=1;  //PrÃ³xima interrupÃ§Ã£o por borda de subida
    }
 }
 
@@ -219,7 +219,7 @@ void determina_valor()
 
 void main()
 {
-   init();  //Condições iniciais
+   init();  //CondiÃ§Ãµes iniciais
    lcd_init(); //Inicia LCD
    lcd_cursor_off(); //Desliga cursor LCD
    while(1) //Rotina
